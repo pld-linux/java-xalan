@@ -7,7 +7,7 @@ Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.5.D1
 %define	ver	%(echo %{version} | tr . _)
-Release:	1
+Release:	2
 License:	Apache/W3C
 Group:		Applications/Publishing/XML/Java
 Source0:	http://xml.apache.org/xalan-j/dist/%{name}_%{ver}-src.tar.gz
@@ -27,7 +27,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_javaclassdir	%{_libdir}/java/
+%define		_javaclassdir	%{_datadir}/java/
 
 %description
 XSLT processor for Java.
