@@ -8,7 +8,7 @@ Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	%{major}.%{minor}
-Release:	2
+Release:	3
 License:	Apache Software License
 Group:		Applications/Publishing/XML/Java
 Group(de):	Applikationen/Publizieren/XML/Java
@@ -48,12 +48,14 @@ export JAVA_HOME
 
 ANT_OPTS=-O
 export ANT_OPTS
+
 sh build.sh docs
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javaclassdir}
 
+install bin/xml-apis.jar $RPM_BUILD_ROOT%{_javaclassdir}
 install build/xalan.jar $RPM_BUILD_ROOT%{_javaclassdir}
 
 gzip -9nf readme.html License
@@ -64,4 +66,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {readme.html,License}.gz build/docs/*
-%{_javaclassdir}/xalan.jar
+%{_javaclassdir}/*.jar
