@@ -25,7 +25,6 @@ Provides:	jaxp_transform_impl
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_javalibdir	%{_datadir}/java
 
 %description
 XSLT processor for Java.
@@ -39,26 +38,26 @@ find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.
 
 %build
 JAVA_HOME=%{_libdir}/java
-CLASSPATH=%{_javalibdir}/servlet.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/java_cup.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/java_cup-runtime.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/jlex.jar
-CLASSPATH=$CLASSPATH:%{_javalibdir}/bcel.jar
+CLASSPATH=%{_javadir}/servlet.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/java_cup.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/java_cup-runtime.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/jlex.jar
+CLASSPATH=$CLASSPATH:%{_javadir}/bcel.jar
 export JAVA_HOME CLASSPATH
 
-ln -sf %{_javalibdir}/bcel.jar bin/BCEL.jar
-ln -sf %{_javalibdir}/regexp.jar bin/regexp.jar
-ln -sf %{_javalibdir}/java_cup-runtime.jar bin/runtime.jar
+ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
+ln -sf %{_javadir}/regexp.jar bin/regexp.jar
+ln -sf %{_javadir}/java_cup-runtime.jar bin/runtime.jar
 ant xsltc.unbundledjar docs xsltc.docs javadocs samples servlet
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javalibdir}
+install -d $RPM_BUILD_ROOT%{_javadir}
 
-install build/{xalan,xsltc}.jar $RPM_BUILD_ROOT%{_javalibdir}
-ln -sf xalan.jar $RPM_BUILD_ROOT%{_javalibdir}/xalan-%{version}.jar
-ln -sf xalan.jar $RPM_BUILD_ROOT%{_javalibdir}/jaxp_transform_impl.jar
-ln -sf xsltc.jar $RPM_BUILD_ROOT%{_javalibdir}/xsltc-%{version}.jar
+install build/{xalan,xsltc}.jar $RPM_BUILD_ROOT%{_javadir}
+ln -sf xalan.jar $RPM_BUILD_ROOT%{_javadir}/xalan-%{version}.jar
+ln -sf xalan.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
+ln -sf xsltc.jar $RPM_BUILD_ROOT%{_javadir}/xsltc-%{version}.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -66,4 +65,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc License build/docs/*
-%{_javalibdir}/*.jar
+%{_javadir}/*.jar
