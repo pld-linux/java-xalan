@@ -11,6 +11,7 @@ Release:	2
 License:	Apache/W3C
 Group:		Applications/Publishing/XML/Java
 Source0:	http://xml.apache.org/xalan-j/dist/%{name}_%{ver}-src.tar.gz
+# Source0-md5:	9fb00330484d6d7936eaede035c9156e
 Patch0:		%{name}-build.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	jakarta-ant >= 1.4.1
