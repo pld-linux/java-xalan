@@ -11,10 +11,6 @@ Version:	%{major}.%{minor}
 Release:	3
 License:	Apache Software License
 Group:		Applications/Publishing/XML/Java
-Group(de):	Applikationen/Publizieren/XML/Java
-Group(es):	Aplicaciones/Editoración/XML/Java
-Group(pl):	Aplikacje/Publikowanie/XML/Java
-Group(pt_BR):	Aplicações/Editoração/XML/Java
 URL:		http://xml.apache.org/xalan-j
 Source0:	http://xml.apache.org/xalan-j/dist/%{name}_%{ver}-src.tar.gz
 Patch0:		xalan-build.patch
