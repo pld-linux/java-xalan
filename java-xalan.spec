@@ -8,7 +8,7 @@ Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	%{major}.%{minor}
-Release:	3
+Release:	4
 License:	Apache Software License
 Group:		Applications/Publishing/XML/Java
 URL:		http://xml.apache.org/xalan-j
@@ -38,7 +38,7 @@ sed 's/
 $//' < build.sh.dos > build.sh
 
 %build
-JAVA_HOME=%{_libdir}/java-sdk
+JAVA_HOME=%{_libdir}/java
 export JAVA_HOME
 
 ANT_OPTS=-O
