@@ -1,4 +1,4 @@
-%define		ver	2.5.1
+%define		ver	2.6.0
 %define		_ver	%(echo %{ver} | tr . _)
 
 Summary:	XSLT processor for Java
@@ -8,8 +8,8 @@ Version:	%{ver}
 Release:	1
 License:	Apache/W3C
 Group:		Applications/Publishing/XML/Java
-Source0:	http://xml.apache.org/dist/xalan-j/%{name}_%{_ver}-src.tar.gz
-# Source0-md5:	a07c12bfb562ecfd9985c3b00ec06328
+Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
+# Source0-md5:	a210f7108e680ab60a11977ec99ab1f9
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	jakarta-ant >= 1.5
 BuildRequires:	jdk >= 1.2
@@ -64,5 +64,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc License build/docs/*
+%doc LICENSE build/docs/*
 %{_javadir}/*.jar
