@@ -1,34 +1,31 @@
-
-# Conditional builds
-# - with jdk14 - build with jdk 1.4.x and up
+%define		ver	2.5.1
+%define		_ver	%(echo %{ver} | tr . _)
 
 Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
-Version:	2.5.D1
-%define	ver	%(echo %{version} | tr . _)
-Release:	2
+Version:	%{ver}
+Release:	1
 License:	Apache/W3C
 Group:		Applications/Publishing/XML/Java
-Source0:	http://xml.apache.org/xalan-j/dist/%{name}_%{ver}-src.tar.gz
-# Source0-md5:	9fb00330484d6d7936eaede035c9156e
-Patch0:		%{name}-build.patch
+Source0:	http://xml.apache.org/dist/xalan-j/%{name}_%{_ver}-src.tar.gz
+# Source0-md5:	a07c12bfb562ecfd9985c3b00ec06328
 URL:		http://xml.apache.org/xalan-j/
-BuildRequires:	jakarta-ant >= 1.4.1
+BuildRequires:	jakarta-ant >= 1.5
 BuildRequires:	jdk >= 1.2
+BuildRequires:	xml-commons
+BuildRequires:	jaxp_parser_impl
+BuildRequires:	jakarta-bcel
+BuildRequires:	servlet
+BuildRequires:	jlex
+BuildRequires:	java_cup
 Requires:	jre >= 1.2
-
-%if %{!?_with_jdk14:1}%{?_with_jdk14:0}
-BuildRequires:	xerces-j >= 1.4.4-2
-Requires:	xerces-j >= 1.4.4-2
-%endif
-
-BuildArch:	noarch
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Requires:	jaxp_parser_impl
+Provides:	jaxp_transform_impl
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_javaclassdir	%{_datadir}/java/
+%define		_javalibdir	%{_datadir}/java
 
 %description
 XSLT processor for Java.
@@ -37,35 +34,31 @@ XSLT processor for Java.
 Procesor XSLT napisany w Javie.
 
 %prep
-%setup -q -n xalan-j_%{ver}
-#%patch -p1
-
-mv build.sh build.sh.dos
-sed 's/
-$//' < build.sh.dos > build.sh
+%setup -q -n xalan-j_%{_ver}
+find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
 
 %build
 JAVA_HOME=%{_libdir}/java
-ANT_OPTS=-O
+CLASSPATH=%{_javalibdir}/servlet.jar
+CLASSPATH=$CLASSPATH:%{_javalibdir}/java_cup.jar
+CLASSPATH=$CLASSPATH:%{_javalibdir}/java_cup-runtime.jar
+CLASSPATH=$CLASSPATH:%{_javalibdir}/jlex.jar
+CLASSPATH=$CLASSPATH:%{_javalibdir}/bcel.jar
+export JAVA_HOME CLASSPATH
 
-%if %{!?_with_jdk14:1}%{?_with_jdk14:0}
-PARSER_JAR=/usr/share/java/xerces.jar
-export JAVA_HOME ANT_OPTS PARSER_JAR
-%else
-export JAVA_HOME ANT_OPTS
-%endif
-
-sh build.sh docs
+ln -sf %{_javalibdir}/bcel.jar bin/BCEL.jar
+ln -sf %{_javalibdir}/regexp.jar bin/regexp.jar
+ln -sf %{_javalibdir}/java_cup-runtime.jar bin/runtime.jar
+ant xsltc.unbundledjar docs xsltc.docs javadocs samples servlet
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_javaclassdir}
+install -d $RPM_BUILD_ROOT%{_javalibdir}
 
-%if %{!?_with_jdk14:1}%{?_with_jdk14:0}
-install bin/xml-apis.jar $RPM_BUILD_ROOT%{_javaclassdir}
-%endif
-install build/xalan.jar $RPM_BUILD_ROOT%{_javaclassdir}/xalan-%{version}.jar
-ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javaclassdir}/xalan.jar
+install build/{xalan,xsltc}.jar $RPM_BUILD_ROOT%{_javalibdir}
+ln -sf xalan.jar $RPM_BUILD_ROOT%{_javalibdir}/xalan-%{version}.jar
+ln -sf xalan.jar $RPM_BUILD_ROOT%{_javalibdir}/jaxp_transform_impl.jar
+ln -sf xsltc.jar $RPM_BUILD_ROOT%{_javalibdir}/xsltc-%{version}.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -73,4 +66,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc License build/docs/*
-%{_javaclassdir}/*.jar
+%{_javalibdir}/*.jar
