@@ -26,7 +26,6 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_javaclassdir	%{_libdir}/java/
-%define		jredir			%{_libdir}/java-sdk/jre/lib
 
 %description
 XSLT processor for Java.
