@@ -7,7 +7,7 @@ diff -Nur xalan-j_2_2_0.orig/build.sh xalan-j_2_2_0/build.sh
  fi
  if [ "$PARSER_JAR" = "" ] ; then
 -    PARSER_JAR=./bin/xerces.jar
-+    PARSER_JAR=/usr/share/java/classes/xerces.jar
++    PARSER_JAR=/usr/lib/java/xerces.jar
  fi
  
  if [ "$XML-APIS_JAR" = "" ] ; then
