@@ -1,7 +1,11 @@
+
+# Conditional builds
+# - with jdk14 - build with jdk 1.4.x and up
+
 Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
-Version:	2.3.1
+Version:	2.5.D1
 %define	ver	%(echo %{version} | tr . _)
 Release:	1
 License:	Apache/W3C
@@ -11,9 +15,15 @@ Patch0:		%{name}-build.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	jakarta-ant >= 1.4.1
 BuildRequires:	jdk >= 1.2
-BuildRequires:	xerces-j >= 1.4.4-2
 Requires:	jre >= 1.2
+
+%if %{!?_with_jdk14:1}%{?_with_jdk14:0}
+BuildRequires:	xerces-j >= 1.4.4-2
 Requires:	xerces-j >= 1.4.4-2
+%endif
+
+BuildArch:	noarch
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -27,7 +37,7 @@ Procesor XSLT napisany w Javie.
 
 %prep
 %setup -q -n xalan-j_%{ver}
-%patch -p1
+#%patch -p1
 
 mv build.sh build.sh.dos
 sed 's/
@@ -36,8 +46,13 @@ $//' < build.sh.dos > build.sh
 %build
 JAVA_HOME=%{_libdir}/java
 ANT_OPTS=-O
+
+%if %{!?_with_jdk14:1}%{?_with_jdk14:0}
 PARSER_JAR=/usr/share/java/xerces.jar
 export JAVA_HOME ANT_OPTS PARSER_JAR
+%else
+export JAVA_HOME ANT_OPTS
+%endif
 
 sh build.sh docs
 
@@ -45,13 +60,16 @@ sh build.sh docs
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javaclassdir}
 
+%if %{!?_with_jdk14:1}%{?_with_jdk14:0}
 install bin/xml-apis.jar $RPM_BUILD_ROOT%{_javaclassdir}
-install build/xalan.jar $RPM_BUILD_ROOT%{_javaclassdir}
+%endif
+install build/xalan.jar $RPM_BUILD_ROOT%{_javaclassdir}/xalan-%{version}.jar
+ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javaclassdir}/xalan.jar
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc readme.html License build/docs/*
+%doc License build/docs/*
 %{_javaclassdir}/*.jar
