@@ -18,6 +18,7 @@ BuildRequires:	xml-commons
 BuildRequires:	jaxp_parser_impl
 BuildRequires:	jakarta-bcel
 # servlet provided by jakarta-servletapi.spec
+# also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 BuildRequires:	servlet
 BuildRequires:	jlex
 BuildRequires:	java_cup
