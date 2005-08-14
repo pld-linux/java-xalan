@@ -17,6 +17,7 @@ BuildRequires:	jdk >= 1.2
 BuildRequires:	xml-commons
 BuildRequires:	jaxp_parser_impl
 BuildRequires:	jakarta-bcel
+# servlet provided by jakarta-servletapi.spec
 BuildRequires:	servlet
 BuildRequires:	jlex
 BuildRequires:	java_cup
