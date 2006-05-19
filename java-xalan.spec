@@ -12,7 +12,7 @@ Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.g
 # Source0-md5:	a210f7108e680ab60a11977ec99ab1f9
 Patch0:		%{name}-dom3.patch
 URL:		http://xml.apache.org/xalan-j/
-BuildRequires:	jakarta-ant >= 1.5
+BuildRequires:	ant >= 1.5
 BuildRequires:	jdk >= 1.2
 BuildRequires:	xml-commons
 BuildRequires:	jaxp_parser_impl
