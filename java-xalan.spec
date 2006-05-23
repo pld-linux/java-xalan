@@ -8,7 +8,7 @@ Name:		xalan-j
 Version:	2.6.0
 %define	_ver	%(echo %{version} | tr . _)
 Release:	2
-License:	Apache License v2.0
+License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
 # Source0-md5:	a210f7108e680ab60a11977ec99ab1f9
