@@ -38,6 +38,7 @@ Procesor XSLT napisany w Javie.
 
 %package doc
 Summary:	Documentation for xalan-j, an XSLT processor for Java
+Summary:	Dokumentacja dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
 
 %description doc
