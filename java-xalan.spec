@@ -1,12 +1,11 @@
+# TODO
+# - without_docs bcond; generating takes ages
 #
-# TODO: without_docs bcond; generating takes ages
-#
-%include	/usr/lib/rpm/macros.java
+%define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.6.0
-%define	_ver	%(echo %{version} | tr . _)
 Release:	2
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
@@ -15,17 +14,18 @@ Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.g
 Patch0:		%{name}-dom3.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
-BuildRequires:	jdk >= 1.2
-BuildRequires:	xml-commons
-BuildRequires:	jaxp_parser_impl
 BuildRequires:	jakarta-bcel
+BuildRequires:	jaxp_parser_impl
+BuildRequires:	jdk >= 1.2
+BuildRequires:	rpmbuild(macros) >= 1.300
+BuildRequires:	xml-commons
 # servlet provided by jakarta-servletapi.spec
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
-BuildRequires:	servlet
-BuildRequires:	jlex
 BuildRequires:	java_cup
-Requires:	jre >= 1.2
+BuildRequires:	jlex
+BuildRequires:	servlet
 Requires:	jaxp_parser_impl
+Requires:	jre >= 1.2
 Provides:	jaxp_transform_impl
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
