@@ -42,7 +42,7 @@ Procesor XSLT napisany w Javie.
 Summary:	API documentation for xalan-j, an XSLT processor for Java
 Summary:	Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
-Obsoletes:	%{name}-doc
+Obsoletes:	xalan-j-doc
 
 %description javadoc
 API documentation for xalan-j, an XSLT processor for Java.
@@ -77,7 +77,6 @@ export JAVA=%{java}
 ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
 ln -sf %{_javadir}/regexp.jar bin/regexp.jar
 ln -sf %{_javadir}/java_cup-runtime.jar bin/runtime.jar
-
 
 %{ant} xsltc.unbundledjar docs xsltc.docs javadocs samples servlet
 
