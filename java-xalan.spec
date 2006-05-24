@@ -17,6 +17,7 @@ BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
 BuildRequires:	jaxp_parser_impl
 BuildRequires:	jdk >= 1.2
+BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	xml-commons
 # servlet provided by jakarta-servletapi.spec
@@ -28,6 +29,7 @@ Requires:	jaxp_parser_impl
 Requires:	jre >= 1.2
 Provides:	jaxp_transform_impl
 BuildArch:	noarch
+ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -36,16 +38,28 @@ XSLT processor for Java.
 %description -l pl
 Procesor XSLT napisany w Javie.
 
-%package doc
-Summary:	Documentation for xalan-j, an XSLT processor for Java
-Summary:	Dokumentacja dla xalan-j, procesora XSLT napisanego w Javie
+%package javadoc
+Summary:	API documentation for xalan-j, an XSLT processor for Java
+Summary:	Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie
+Group:		Documentation
+Obsoletes:	%{name}-doc
+
+%description javadoc
+API documentation for xalan-j, an XSLT processor for Java.
+
+%description javadoc -l pl
+Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie.
+
+%package examples
+Summary:	Xalan-j, an XSLT processor for Java examples
+Summary:	Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
 
-%description doc
-Documentation for xalan-j, an XSLT processor for Java.
+%description examples
+Xalan-j, an XSLT processor for Java examples.
 
-%description doc -l pl
-Dokumentacja dla xalan-j, procesora XSLT napisanego w Javie.
+%description examples -l pl
+Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie.
 
 %prep
 %setup -q -n xalan-j_%{_ver}
@@ -63,18 +77,22 @@ export JAVA=%{java}
 ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
 ln -sf %{_javadir}/regexp.jar bin/regexp.jar
 ln -sf %{_javadir}/java_cup-runtime.jar bin/runtime.jar
+
+
 %{ant} xsltc.unbundledjar docs xsltc.docs javadocs samples servlet
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_javadir},%{_examplesdir}}
+install -d $RPM_BUILD_ROOT{%{_javadir},%{_examplesdir},%{_javadocdir}/%{name}-%{version}}
 
-install build/{xalan,xsltc}.jar $RPM_BUILD_ROOT%{_javadir}
-ln -sf xalan.jar $RPM_BUILD_ROOT%{_javadir}/xalan-%{version}.jar
-ln -sf xalan.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
-ln -sf xsltc.jar $RPM_BUILD_ROOT%{_javadir}/xsltc-%{version}.jar
+install build/xalan.jar $RPM_BUILD_ROOT%{_javadir}/xalan-%{version}.jar
+install build/xsltc.jar $RPM_BUILD_ROOT%{_javadir}/xsltc-%{version}.jar
+ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan.jar
+ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
+ln -sf xsltc-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xsltc.jar
 
 cp -r samples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -r build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -82,9 +100,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %{_javadir}/*.jar
-%doc NOTICE
+%doc NOTICE build/docs/design build/docs/xsltc
 
-%files doc
+%files javadoc
 %defattr(644,root,root,755)
-%doc build/docs/*
+%doc %{_javadocdir}/%{name}-%{version}
+
+%files examples
+%defattr(644,root,root,755)
 %{_examplesdir}/%{name}-%{version}
