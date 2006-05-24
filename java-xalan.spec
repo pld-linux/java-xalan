@@ -1,12 +1,16 @@
-# TODO
-# - without_docs bcond; generating takes ages
+#
+# Conditional build:
+%bcond_without	docs	# do not build documentation
+#
+# TODO:
+#	- build with external xml-commons? (seems included in JRE)
 #
 %define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.6.0
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
@@ -19,11 +23,10 @@ BuildRequires:	jaxp_parser_impl
 BuildRequires:	jdk >= 1.2
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildRequires:	xml-commons
-# servlet provided by jakarta-servletapi.spec
-# also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 BuildRequires:	java_cup
 BuildRequires:	jlex
+# servlet provided by jakarta-servletapi.spec
+# also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 BuildRequires:	servlet
 Requires:	jaxp_parser_impl
 Requires:	jre >= 1.2
@@ -78,7 +81,12 @@ ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
 ln -sf %{_javadir}/regexp.jar bin/regexp.jar
 ln -sf %{_javadir}/java_cup-runtime.jar bin/runtime.jar
 
+<<<<<<< xalan-j.spec
+
+%{ant} xsltc.unbundledjar servlet %{?with_docs:docs xsltc.docs javadocs samples}
+=======
 %{ant} xsltc.unbundledjar docs xsltc.docs javadocs samples servlet
+>>>>>>> 1.25
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -90,8 +98,10 @@ ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan.jar
 ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
 ln -sf xsltc-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xsltc.jar
 
+%if %{with docs}
 cp -r samples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -r build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -99,8 +109,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %{_javadir}/*.jar
-%doc NOTICE build/docs/design build/docs/xsltc
+%doc NOTICE %{?with_docs:build/docs/design build/docs/xsltc}
 
+%if %{with docs}
 %files javadoc
 %defattr(644,root,root,755)
 %doc %{_javadocdir}/%{name}-%{version}
@@ -108,3 +119,4 @@ rm -rf $RPM_BUILD_ROOT
 %files examples
 %defattr(644,root,root,755)
 %{_examplesdir}/%{name}-%{version}
+%endif
