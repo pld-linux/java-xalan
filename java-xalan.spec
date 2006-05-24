@@ -10,7 +10,7 @@ Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.6.0
-Release:	3
+Release:	4
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
@@ -81,12 +81,7 @@ ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
 ln -sf %{_javadir}/regexp.jar bin/regexp.jar
 ln -sf %{_javadir}/java_cup-runtime.jar bin/runtime.jar
 
-<<<<<<< xalan-j.spec
-
 %{ant} xsltc.unbundledjar servlet %{?with_docs:docs xsltc.docs javadocs samples}
-=======
-%{ant} xsltc.unbundledjar docs xsltc.docs javadocs samples servlet
->>>>>>> 1.25
 
 %install
 rm -rf $RPM_BUILD_ROOT
