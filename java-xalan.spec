@@ -81,7 +81,7 @@ ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
 ln -sf %{_javadir}/regexp.jar bin/regexp.jar
 ln -sf %{_javadir}/java_cup-runtime.jar bin/runtime.jar
 
-%{ant} xsltc.unbundledjar servlet %{?with_docs:docs xsltc.docs javadocs samples}
+%ant xsltc.unbundledjar servlet %{?with_docs:docs xsltc.docs javadocs samples}
 
 %install
 rm -rf $RPM_BUILD_ROOT
