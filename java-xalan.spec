@@ -71,11 +71,11 @@ Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie.
 find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
 
 %build
-required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl'
-export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
 export JAVA_HOME=%{java_home}
 export JAVAC=%{javac}
 export JAVA=%{java}
+required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl'
+export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
 
 ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
 ln -sf %{_javadir}/regexp.jar bin/regexp.jar
