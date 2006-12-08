@@ -10,7 +10,7 @@ Summary:	XSLT processor for Java
 Summary(pl):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.6.0
-Release:	4
+Release:	5
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
@@ -19,12 +19,12 @@ Patch0:		%{name}-dom3.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
+BuildRequires:	java_cup
 BuildRequires:	jaxp_parser_impl
 BuildRequires:	jdk >= 1.2
+BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildRequires:	java_cup
-BuildRequires:	jlex
 # servlet provided by jakarta-servletapi.spec
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 BuildRequires:	servlet
@@ -45,6 +45,7 @@ Procesor XSLT napisany w Javie.
 Summary:	API documentation for xalan-j, an XSLT processor for Java
 Summary:	Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
+Requires:	jpackage-utils
 Obsoletes:	xalan-j-doc
 
 %description javadoc
@@ -54,8 +55,8 @@ API documentation for xalan-j, an XSLT processor for Java.
 Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie.
 
 %package examples
-Summary:	Xalan-j, an XSLT processor for Java examples
 Summary:	Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie
+Summary:	Xalan-j, an XSLT processor for Java examples
 Group:		Documentation
 
 %description examples
@@ -65,7 +66,7 @@ Xalan-j, an XSLT processor for Java examples.
 Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie.
 
 %prep
-%setup -q -n xalan-j_%{_ver}
+%setup -q -n %{name}_%{_ver}
 %patch0 -p1
 
 find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
