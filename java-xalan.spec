@@ -43,7 +43,7 @@ Procesor XSLT napisany w Javie.
 
 %package javadoc
 Summary:	API documentation for xalan-j, an XSLT processor for Java
-Summary:	Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie
+Summary(pl):	Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	xalan-j-doc
@@ -55,8 +55,8 @@ API documentation for xalan-j, an XSLT processor for Java.
 Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie.
 
 %package examples
-Summary:	Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie
 Summary:	Xalan-j, an XSLT processor for Java examples
+Summary(pl):	Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
 
 %description examples
