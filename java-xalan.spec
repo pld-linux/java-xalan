@@ -3,7 +3,8 @@
 %bcond_without	docs	# do not build documentation
 #
 # TODO:
-#	- build with external xml-commons? (seems included in JRE)
+#	- FIXME: xalan-interpretive needs org.w3c.dom.xpath, which is in included xml-commons-external only
+#	- build with external xml-commons? (is there new version available?)
 #
 %define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
@@ -15,7 +16,6 @@ License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
 # Source0-md5:	7859a78a5564cae42c933adcbbecdd01
-Patch0:		%{name}-dom3.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
@@ -67,7 +67,6 @@ Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie.
 
 %prep
 %setup -q -n %{name}_%{_ver}
-%patch0 -p1
 
 find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
 
@@ -78,9 +77,10 @@ export JAVA=%{java}
 required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl'
 export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
 
-ln -sf %{_javadir}/bcel.jar bin/BCEL.jar
-ln -sf %{_javadir}/regexp.jar bin/regexp.jar
-ln -sf %{_javadir}/java_cup-runtime.jar bin/runtime.jar
+# XXX: is it needed? other jars are not symlinked
+ln -sf %{_javadir}/bcel.jar lib/BCEL.jar
+ln -sf %{_javadir}/regexp.jar lib/regexp.jar
+ln -sf %{_javadir}/java_cup-runtime.jar lib/runtime.jar
 
 %ant xsltc.unbundledjar servlet %{?with_docs:docs xsltc.docs javadocs samples}
 
