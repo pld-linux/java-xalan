@@ -1,10 +1,6 @@
 #
 # Conditional build:
-%bcond_without	docs	# do not build documentation
-#
-# TODO:
-#	- FIXME: xalan-interpretive needs org.w3c.dom.xpath, which is in included xml-commons-external only
-#	- build with external xml-commons? (is there new version available?)
+%bcond_without	docs	# do not build documentation (takes a looong time)
 #
 %define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
@@ -25,6 +21,7 @@ BuildRequires:	jdk >= 1.2
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
+BuildRequires:	xml-commons-external >= 1.3
 # servlet provided by jakarta-servletapi.spec
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 BuildRequires:	servlet
@@ -70,17 +67,17 @@ Przyk³ady dla xalan-j, procesora XSLT napisanego w Javie.
 
 find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
 
+# copied to xalan.jar (TODO: don't do it and use system ones?)
+ln -sf %{_javadir}/bcel.jar lib/BCEL.jar
+ln -sf %{_javadir}/regexp.jar lib/regexp.jar
+ln -sf %{_javadir}/java_cup-runtime.jar lib/runtime.jar
+
 %build
 export JAVA_HOME=%{java_home}
 export JAVAC=%{javac}
 export JAVA=%{java}
-required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl'
+required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xml-apis'
 export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
-
-# XXX: is it needed? other jars are not symlinked
-ln -sf %{_javadir}/bcel.jar lib/BCEL.jar
-ln -sf %{_javadir}/regexp.jar lib/regexp.jar
-ln -sf %{_javadir}/java_cup-runtime.jar lib/runtime.jar
 
 %ant xsltc.unbundledjar servlet %{?with_docs:docs xsltc.docs javadocs samples}
 
@@ -104,8 +101,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc %{?with_docs:build/docs/design build/docs/xsltc}
 %{_javadir}/*.jar
-%doc NOTICE %{?with_docs:build/docs/design build/docs/xsltc}
 
 %if %{with docs}
 %files javadoc
