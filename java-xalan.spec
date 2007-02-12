@@ -4,7 +4,7 @@
 #
 %define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
-Summary(pl.UTF-8):   Procesor XSLT napisany w Javie
+Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.7.0
 Release:	1
@@ -40,7 +40,7 @@ Procesor XSLT napisany w Javie.
 
 %package javadoc
 Summary:	API documentation for xalan-j, an XSLT processor for Java
-Summary(pl.UTF-8):   Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie
+Summary(pl.UTF-8):	Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	xalan-j-doc
@@ -53,7 +53,7 @@ Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie.
 
 %package examples
 Summary:	Xalan-j, an XSLT processor for Java examples
-Summary(pl.UTF-8):   Przykłady dla xalan-j, procesora XSLT napisanego w Javie
+Summary(pl.UTF-8):	Przykłady dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
 
 %description examples
