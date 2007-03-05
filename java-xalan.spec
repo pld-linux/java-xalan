@@ -7,7 +7,7 @@ Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.7.0
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
@@ -85,8 +85,10 @@ export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_javadir},%{_examplesdir},%{_javadocdir}/%{name}-%{version}}
 
+install build/serializer.jar $RPM_BUILD_ROOT%{_javadir}/serializer-%{version}.jar
 install build/xalan.jar $RPM_BUILD_ROOT%{_javadir}/xalan-%{version}.jar
 install build/xsltc.jar $RPM_BUILD_ROOT%{_javadir}/xsltc-%{version}.jar
+ln -sf serializer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/serializer.jar
 ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan.jar
 ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
 ln -sf xsltc-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xsltc.jar
