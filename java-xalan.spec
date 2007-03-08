@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	docs	# do not build documentation (needs 1G of virt mem)
+%bcond_without	docs	# do not build documentation
 #
 %define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
