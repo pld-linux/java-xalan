@@ -7,11 +7,12 @@ Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		xalan-j
 Version:	2.7.0
-Release:	3
+Release:	4
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
 # Source0-md5:	7859a78a5564cae42c933adcbbecdd01
+Patch0:		%{name}-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
@@ -64,6 +65,7 @@ Przykłady dla xalan-j, procesora XSLT napisanego w Javie.
 
 %prep
 %setup -q -n %{name}_%{_ver}
+%patch0 -p1
 
 find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
 
