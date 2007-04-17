@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	docs	# do not build documentation
+%bcond_without	doc	# do not build documentation
 #
 %define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
@@ -81,7 +81,7 @@ export JAVA=%{java}
 required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xml-apis'
 export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
 
-%ant xsltc.unbundledjar servlet %{?with_docs:docs xsltc.docs javadocs samples}
+%ant xsltc.unbundledjar servlet %{?with_doc:docs xsltc.docs javadocs samples}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -95,7 +95,7 @@ ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan.jar
 ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
 ln -sf xsltc-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xsltc.jar
 
-%if %{with docs}
+%if %{with doc}
 cp -r samples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -r build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 %endif
@@ -105,10 +105,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc %{?with_docs:build/docs/design build/docs/xsltc}
+%doc %{?with_doc:build/docs/design build/docs/xsltc}
 %{_javadir}/*.jar
 
-%if %{with docs}
+%if %{with doc}
 %files javadoc
 %defattr(644,root,root,755)
 %doc %{_javadocdir}/%{name}-%{version}
