@@ -11,7 +11,7 @@ Release:	4
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
-# Source0-md5:	fc805051f0fe505c7a4b1b5c8db9b9e3
+# Source0-md5:	7859a78a5564cae42c933adcbbecdd01
 Patch0:		%{name}-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
