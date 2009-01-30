@@ -2,17 +2,18 @@
 # Conditional build:
 %bcond_without	doc	# do not build documentation
 #
+%define	srcname	xalan
 %define	_ver	%(echo %{version} | tr . _)
 Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
-Name:		xalan-j
+Name:		java-xalan
 Version:	2.7.0
 Release:	4
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/%{name}_%{_ver}-src.tar.gz
 # Source0-md5:	7859a78a5564cae42c933adcbbecdd01
-Patch0:		%{name}-javadoc-mem.patch
+Patch0:		%{srcname}-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
@@ -29,6 +30,8 @@ BuildRequires:	servlet
 Requires:	jaxp_parser_impl
 Requires:	jre >= 1.2
 Provides:	jaxp_transform_impl
+Provides:	xalan-j
+Obsoletes:	xalan-j
 BuildArch:	noarch
 ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -45,6 +48,7 @@ Summary(pl.UTF-8):	Dokumentacja API dla xalan-j, procesora XSLT napisanego w Jav
 Group:		Documentation
 Requires:	jpackage-utils
 Obsoletes:	xalan-j-doc
+Obsoletes:	xalan-j-javadoc
 
 %description javadoc
 API documentation for xalan-j, an XSLT processor for Java.
@@ -56,6 +60,7 @@ Dokumentacja API dla xalan-j, procesora XSLT napisanego w Javie.
 Summary:	Xalan-j, an XSLT processor for Java examples
 Summary(pl.UTF-8):	Przykłady dla xalan-j, procesora XSLT napisanego w Javie
 Group:		Documentation
+Obsoletes:	xalan-j-examples
 
 %description examples
 Xalan-j, an XSLT processor for Java examples.
@@ -64,7 +69,7 @@ Xalan-j, an XSLT processor for Java examples.
 Przykłady dla xalan-j, procesora XSLT napisanego w Javie.
 
 %prep
-%setup -q -n %{name}_%{_ver}
+%setup -q -n %{srcname}_%{_ver}
 %patch0 -p1
 
 find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
@@ -85,7 +90,7 @@ export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_javadir},%{_examplesdir},%{_javadocdir}/%{name}-%{version}}
+install -d $RPM_BUILD_ROOT{%{_javadir},%{_examplesdir},%{_javadocdir}/%{srcname}-%{version}}
 
 install build/serializer.jar $RPM_BUILD_ROOT%{_javadir}/serializer-%{version}.jar
 install build/xalan.jar $RPM_BUILD_ROOT%{_javadir}/xalan-%{version}.jar
@@ -96,8 +101,8 @@ ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
 ln -sf xsltc-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xsltc.jar
 
 %if %{with doc}
-cp -r samples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-cp -r build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -r samples $RPM_BUILD_ROOT%{_examplesdir}/%{srcname}-%{version}
+cp -r build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 %endif
 
 %clean
@@ -111,9 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with doc}
 %files javadoc
 %defattr(644,root,root,755)
-%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{srcname}-%{version}
 
 %files examples
 %defattr(644,root,root,755)
-%{_examplesdir}/%{name}-%{version}
+%{_examplesdir}/%{srcname}-%{version}
 %endif
