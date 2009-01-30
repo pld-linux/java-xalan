@@ -84,7 +84,8 @@ export JAVA_HOME=%{java_home}
 export JAVAC=%{javac}
 export JAVA=%{java}
 required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xml-apis'
-export CLASSPATH="`/usr/bin/build-classpath $required_jars`"
+CLASSPATH=$(build-classpath $required_jars)
+export CLASSPATH
 
 %ant xsltc.unbundledjar servlet %{?with_doc:docs xsltc.docs javadocs samples}
 
