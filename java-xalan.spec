@@ -19,7 +19,7 @@ BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
 BuildRequires:	java_cup
 BuildRequires:	jaxp_parser_impl
-BuildRequires:	jdk >= 1.2
+BuildRequires:	java-gcj-compat
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
@@ -28,12 +28,10 @@ BuildRequires:	xml-commons-external >= 1.3
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 BuildRequires:	servlet
 Requires:	jaxp_parser_impl
-Requires:	jre >= 1.2
 Provides:	jaxp_transform_impl
 Provides:	xalan-j
 Obsoletes:	xalan-j
 BuildArch:	noarch
-ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664} noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -69,7 +67,7 @@ Xalan-j, an XSLT processor for Java examples.
 Przykłady dla xalan-j, procesora XSLT napisanego w Javie.
 
 %prep
-%setup -q -n %{srcname}_%{_ver}
+%setup -q -n xalan-j_%{_ver}
 %patch0 -p1
 
 find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
