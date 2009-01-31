@@ -19,7 +19,7 @@ BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
 BuildRequires:	java_cup
 BuildRequires:	jaxp_parser_impl
-BuildRequires:	java-gcj-compat
+BuildRequires:	java-gcj-compat-devel
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
