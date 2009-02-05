@@ -26,7 +26,8 @@ BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	java-xml-commons-external
 # servlet provided by jakarta-servletapi.spec
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
-BuildRequires:	servlet
+# but we do want servlet implementation working with gnu java
+BuildRequires:	java-servletapi5
 Requires:	jaxp_parser_impl
 Provides:	jaxp_transform_impl
 Provides:	xalan-j
@@ -85,7 +86,9 @@ required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xml-
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
 
-%ant xsltc.unbundledjar servlet %{?with_doc:docs xsltc.docs javadocs samples}
+%ant -Dbuild.compiler=gcj \
+	xsltc.unbundledjar servlet \
+	%{?with_doc:docs xsltc.docs javadocs samples}
 
 %install
 rm -rf $RPM_BUILD_ROOT
