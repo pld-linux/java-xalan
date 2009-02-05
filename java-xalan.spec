@@ -23,7 +23,7 @@ BuildRequires:	java-gcj-compat-devel
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildRequires:	xml-commons-external >= 1.3
+BuildRequires:	java-xml-commons-external
 # servlet provided by jakarta-servletapi.spec
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 BuildRequires:	servlet
