@@ -17,13 +17,13 @@ Patch0:		xalan-j-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
-BuildRequires:	java_cup
-BuildRequires:	jaxp_parser_impl
 BuildRequires:	java-gcj-compat-devel
+BuildRequires:	java-xerces
+BuildRequires:	java-xml-commons-external
+BuildRequires:	java_cup
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildRequires:	java-xml-commons-external
 # servlet provided by jakarta-servletapi.spec
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 # but we do want servlet implementation working with gnu java
@@ -85,6 +85,7 @@ export JAVA=%{java}
 required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xml-apis'
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
+export SHELL=/bin/sh
 
 %ant -Dbuild.compiler=gcj \
 	xsltc.unbundledjar servlet \
