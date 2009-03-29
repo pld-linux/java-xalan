@@ -1,6 +1,7 @@
---- xalan-j/build.xml.org	2007-03-08 16:52:35.000000000 +0000
-+++ xalan-j/build.xml	2007-03-08 16:53:37.000000000 +0000
-@@ -1058,7 +1058,7 @@
+diff -ur xalan-j_2_7_1/build.xml xalan-j_2_7_1.new/build.xml
+--- xalan-j_2_7_1/build.xml	2007-11-22 22:44:01.000000000 +0100
++++ xalan-j_2_7_1.new/build.xml	2009-03-29 19:48:41.271202570 +0200
+@@ -1026,7 +1026,7 @@
      
      <!-- Ant ignores destdir arg if doclet is set, so must send to doclet in doclet subelement-->
      <javadoc
@@ -9,7 +10,7 @@
           destdir="${build.apidocs}"
           public="true"
           sourcepath="${src.dir}"
-@@ -1739,7 +1739,7 @@
+@@ -1685,7 +1685,7 @@
      
      <!-- Ant ignores destdir arg if doclet is set, so must send to doclet in doclet subelement-->
      <javadoc
@@ -18,3 +19,4 @@
           destdir="${build.apidocs}"
           public="true"
           sourcepath="${src.dir}"
+Tylko w xalan-j_2_7_1.new/: build.xml~
