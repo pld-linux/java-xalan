@@ -1,23 +1,32 @@
 #
 # Conditional build:
 %bcond_without	doc	# do not build documentation
+%bcond_with     java_sun        # build with java-sun
+
+%if "%{pld_release}" == "ti"
+%define with_java_sun   1
+%endif
+#
+%include        /usr/lib/rpm/macros.java
 #
 %define	srcname	xalan
 %define	_ver	%(echo %{version} | tr . _)
+
 Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
-Version:	2.7.0
-Release:	4
+Version:	2.7.1
+Release:	0.1
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{_ver}-src.tar.gz
-# Source0-md5:	7859a78a5564cae42c933adcbbecdd01
+# Source0-md5:	fc805051f0fe505c7a4b1b5c8db9b9e3
 Patch0:		xalan-j-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
-BuildRequires:	java-gcj-compat-devel
+%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
+%{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	java-xerces
 BuildRequires:	java-xml-commons-external
 BuildRequires:	java_cup
