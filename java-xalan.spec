@@ -38,6 +38,7 @@ BuildRequires:	rpmbuild(macros) >= 1.300
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
 # but we do want servlet implementation working with gnu java
 BuildRequires:	java-servletapi5
+BuildRequires:	java-xerces
 Requires:	jaxp_parser_impl
 Provides:	jaxp_transform_impl
 Provides:	xalan-j
@@ -93,10 +94,10 @@ ln -sf %{_javadir}/java_cup-runtime.jar lib/runtime.jar
 export JAVA_HOME=%{java_home}
 export JAVAC=%{javac}
 export JAVA=%{java}
-required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xml-apis'
+required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xerces-j2 xml-apis'
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
-export SHELL=/bin/sh
+export ANT_OPTS="-Xmx196m"
 
 %ant xsltc.unbundledjar servlet \
 	%{?with_doc:docs xsltc.docs javadocs samples}
