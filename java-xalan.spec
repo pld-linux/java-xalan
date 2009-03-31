@@ -1,10 +1,10 @@
 #
 # Conditional build:
 %bcond_without	doc	# do not build documentation
-%bcond_with     java_sun        # build with java-sun
-
 %if "%{pld_release}" == "ti"
-%define with_java_sun   1
+%bcond_without	java_sun	# build with gcj
+%else
+%bcond_with	java_sun	# build with java-sun
 %endif
 #
 %include        /usr/lib/rpm/macros.java
@@ -16,7 +16,7 @@ Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
 Version:	2.7.1
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{_ver}-src.tar.gz
@@ -32,6 +32,7 @@ BuildRequires:	java-xml-commons-external
 BuildRequires:	java_cup
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
+BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.300
 # servlet provided by jakarta-servletapi.spec
 # also resin.spec, resin-cmp.spec seem to provide it by simple grep.
