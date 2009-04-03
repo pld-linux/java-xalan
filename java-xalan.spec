@@ -29,7 +29,7 @@ BuildRequires:	jakarta-bcel
 %{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	java-xerces
 BuildRequires:	java-xml-commons-external
-BuildRequires:	java_cup
+BuildRequires:	java-cup
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm >= 4.4.9-56
@@ -88,13 +88,13 @@ find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.
 # copied to xalan.jar (TODO: don't do it and use system ones?)
 ln -sf %{_javadir}/bcel.jar lib/BCEL.jar
 ln -sf %{_javadir}/regexp.jar lib/regexp.jar
-ln -sf %{_javadir}/java_cup-runtime.jar lib/runtime.jar
+ln -sf %{_javadir}/cup-runtime.jar lib/runtime.jar
 
 %build
 export JAVA_HOME=%{java_home}
 export JAVAC=%{javac}
 export JAVA=%{java}
-required_jars='servlet java_cup java_cup-runtime jlex bcel jaxp_parser_impl xerces-j2 xml-apis'
+required_jars='servlet cup cup-runtime jlex bcel jaxp_parser_impl xerces-j2 xml-apis'
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
 export ANT_OPTS="-Xmx192m"
