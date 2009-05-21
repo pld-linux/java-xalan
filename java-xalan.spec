@@ -6,20 +6,18 @@
 %else
 %bcond_with	java_sun	# build with java-sun
 %endif
-#
-%include        /usr/lib/rpm/macros.java
-#
-%define	srcname	xalan
-%define	_ver	%(echo %{version} | tr . _)
 
+%define		ver	%(echo %{version} | tr . _)
+%define		srcname	xalan
+%include        /usr/lib/rpm/macros.java
 Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
 Version:	2.7.1
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
-Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{_ver}-src.tar.gz
+Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{ver}-src.tar.gz
 # Source0-md5:	fc805051f0fe505c7a4b1b5c8db9b9e3
 Patch0:		xalan-j-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
@@ -79,11 +77,11 @@ Xalan-j, an XSLT processor for Java examples.
 Przykłady dla xalan-j, procesora XSLT napisanego w Javie.
 
 %prep
-%setup -q -n xalan-j_%{_ver}
+%setup -q -n xalan-j_%{ver}
 %{__sed} -i -e 's,\r$,,' build.xml
 %patch0 -p1
 
-find . -name "*.jar" ! -name "xalan2jdoc.jar" ! -name "stylebook-1.0-b3_xalan-2.jar" -exec rm -f {} \;
+find -name '*.jar' ! -name 'xalan2jdoc.jar' ! -name 'stylebook-1.0-b3_xalan-2.jar' | xargs rm -f
 
 # copied to xalan.jar (TODO: don't do it and use system ones?)
 ln -sf %{_javadir}/bcel.jar lib/BCEL.jar
