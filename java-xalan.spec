@@ -14,7 +14,7 @@ Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
 Version:	2.7.1
-Release:	3
+Release:	4
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{ver}-src.tar.gz
@@ -32,11 +32,9 @@ BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.300
-# servlet provided by jakarta-servletapi.spec
-# also resin.spec, resin-cmp.spec seem to provide it by simple grep.
-# but we do want servlet implementation working with gnu java
-BuildRequires:	java-servletapi5
+BuildRequires:	java(Servlet)
 BuildRequires:	java-xerces
+Requires:	java(Servlet)
 Requires:	jaxp_parser_impl
 Provides:	jaxp_transform_impl
 Provides:	xalan-j
@@ -92,7 +90,7 @@ ln -sf %{_javadir}/cup-runtime.jar lib/runtime.jar
 export JAVA_HOME=%{java_home}
 export JAVAC=%{javac}
 export JAVA=%{java}
-required_jars='servlet cup cup-runtime jlex bcel jaxp_parser_impl xerces-j2 xml-apis'
+required_jars='servlet-api cup cup-runtime jlex bcel jaxp_parser_impl xerces-j2 xml-apis'
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
 export ANT_OPTS="-Xmx192m"
