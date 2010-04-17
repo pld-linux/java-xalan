@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	doc	# do not build documentation
 %if "%{pld_release}" == "ti"
-%bcond_without	java_sun	# build with gcj
+%bcond_without	java_sun	# build with any JDK present
 %else
 %bcond_with	java_sun	# build with java-sun
 %endif
@@ -23,7 +23,7 @@ Patch0:		xalan-j-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
-%{!?with_java_sun:BuildRequires:        java-gcj-compat-devel}
+%{!?with_java_sun:BuildRequires:        jdk}
 %{?with_java_sun:BuildRequires: java-sun}
 BuildRequires:	java-xerces
 BuildRequires:	java-xml-commons-external
