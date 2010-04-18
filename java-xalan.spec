@@ -1,15 +1,10 @@
 #
 # Conditional build:
 %bcond_without	doc	# do not build documentation
-%if "%{pld_release}" == "ti"
-%bcond_without	java_sun	# build with any JDK present
-%else
-%bcond_with	java_sun	# build with java-sun
-%endif
 
 %define		ver	%(echo %{version} | tr . _)
 %define		srcname	xalan
-%include        /usr/lib/rpm/macros.java
+%include	/usr/lib/rpm/macros.java
 Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
@@ -23,20 +18,17 @@ Patch0:		xalan-j-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
 BuildRequires:	jakarta-bcel
-%{!?with_java_sun:BuildRequires:        jdk}
-%{?with_java_sun:BuildRequires: java-sun}
+BuildRequires:	java(servlet)
+BuildRequires:	java-cup
 BuildRequires:	java-xerces
 BuildRequires:	java-xml-commons-external
-BuildRequires:	java-cup
+BuildRequires:	jdk
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
-BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.300
-BuildRequires:	java(Servlet)
-BuildRequires:	java-xerces
-Requires:	java(Servlet)
-Requires:	jaxp_parser_impl
-Provides:	jaxp_transform_impl
+Requires:	java(jaxp_parser_impl)
+Requires:	java(servlet)
+Provides:	java(jaxp_transform_impl)
 Provides:	xalan-j
 Obsoletes:	xalan-j
 BuildArch:	noarch
