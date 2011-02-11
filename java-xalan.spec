@@ -28,7 +28,6 @@ BuildRequires:	jlex
 BuildRequires:	jpackage-utils
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	java(jaxp_parser_impl)
-Requires:	java(servlet)
 Provides:	java(jaxp_transform_impl)
 Provides:	xalan-j
 Obsoletes:	xalan-j
