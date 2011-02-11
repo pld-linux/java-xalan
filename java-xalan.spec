@@ -1,7 +1,8 @@
 #
 # Conditional build:
 %bcond_without	doc	# do not build documentation
-
+%bcond_without	servlet	# don't build servlet sample
+#
 %define		ver	%(echo %{version} | tr . _)
 %define		srcname	xalan
 %include	/usr/lib/rpm/macros.java
@@ -17,10 +18,10 @@ Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{ver}-src.tar.gz
 Patch0:		xalan-j-javadoc-mem.patch
 URL:		http://xml.apache.org/xalan-j/
 BuildRequires:	ant >= 1.5
-BuildRequires:	jakarta-bcel
-BuildRequires:	java(servlet)
+BuildRequires:	java(jaxp_parser_impl)
+%{?with_servlet:BuildRequires:	java(servlet)}
+BuildRequires:	java-bcel
 BuildRequires:	java-cup
-BuildRequires:	java-xerces
 BuildRequires:	java-xml-commons-external
 BuildRequires:	jdk
 BuildRequires:	jlex
@@ -82,12 +83,12 @@ ln -sf %{_javadir}/cup-runtime.jar lib/runtime.jar
 export JAVA_HOME=%{java_home}
 export JAVAC=%{javac}
 export JAVA=%{java}
-required_jars='servlet-api cup cup-runtime jlex bcel jaxp_parser_impl xerces-j2 xml-apis'
+required_jars='%{?with_servlet:servlet-api} cup cup-runtime jlex bcel jaxp_parser_impl xml-apis'
 CLASSPATH=$(build-classpath $required_jars)
 export CLASSPATH
 export ANT_OPTS="-Xmx192m"
 
-%ant xsltc.unbundledjar servlet \
+%ant xsltc.unbundledjar %{?with_servlet:servlet} \
 	%{?with_doc:docs xsltc.docs javadocs samples}
 
 %install
@@ -113,7 +114,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc %{?with_doc:build/docs/design build/docs/xsltc}
-%{_javadir}/*.jar
+%{_javadir}/jaxp_transform_impl.jar
+%{_javadir}/serializer-%{version}.jar
+%{_javadir}/serializer.jar
+%{_javadir}/xalan-%{version}.jar
+%{_javadir}/xalan.jar
+%{_javadir}/xsltc-%{version}.jar
+%{_javadir}/xsltc.jar
 
 %if %{with doc}
 %files javadoc
