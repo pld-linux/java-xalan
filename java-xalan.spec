@@ -112,7 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc %{?with_doc:build/docs/design build/docs/xsltc}
+%doc %{?with_doc:build/docs/xsltc}
 %{_javadir}/jaxp_transform_impl.jar
 %{_javadir}/serializer-%{version}.jar
 %{_javadir}/serializer.jar
