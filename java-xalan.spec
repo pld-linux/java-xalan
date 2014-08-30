@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	doc	# do not build documentation
 %bcond_without	servlet	# don't build servlet sample
-#
+
 %define		ver	%(echo %{version} | tr . _)
 %define		srcname	xalan
 %include	/usr/lib/rpm/macros.java
@@ -10,7 +10,7 @@ Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
 Version:	2.7.1
-Release:	4
+Release:	5
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{ver}-src.tar.gz
@@ -94,17 +94,21 @@ export ANT_OPTS="-Xmx192m"
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_javadir},%{_examplesdir},%{_javadocdir}/%{srcname}-%{version}}
 
-install build/serializer.jar $RPM_BUILD_ROOT%{_javadir}/serializer-%{version}.jar
-install build/xalan.jar $RPM_BUILD_ROOT%{_javadir}/xalan-%{version}.jar
-install build/xsltc.jar $RPM_BUILD_ROOT%{_javadir}/xsltc-%{version}.jar
-ln -sf serializer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/serializer.jar
+cp -p build/serializer.jar $RPM_BUILD_ROOT%{_javadir}/xalan-serializer-%{version}.jar
+cp -p build/xalan.jar $RPM_BUILD_ROOT%{_javadir}/xalan-%{version}.jar
+cp -p build/xsltc.jar $RPM_BUILD_ROOT%{_javadir}/xsltc-%{version}.jar
+ln -sf xalan-serializer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan-serializer.jar
 ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan.jar
 ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jaxp_transform_impl.jar
 ln -sf xsltc-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xsltc.jar
 
+# some expected jar names from JPackage
+ln -sf xalan-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan-j2.jar
+ln -sf xalan-serializer-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/xalan-j2-serializer.jar
+
 %if %{with doc}
-cp -r samples $RPM_BUILD_ROOT%{_examplesdir}/%{srcname}-%{version}
-cp -r build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+cp -a samples $RPM_BUILD_ROOT%{_examplesdir}/%{srcname}-%{version}
+cp -a build/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
 %endif
 
 %clean
@@ -114,12 +118,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc %{?with_doc:build/docs/design build/docs/xsltc}
 %{_javadir}/jaxp_transform_impl.jar
-%{_javadir}/serializer-%{version}.jar
-%{_javadir}/serializer.jar
 %{_javadir}/xalan-%{version}.jar
 %{_javadir}/xalan.jar
+%{_javadir}/xalan-serializer-%{version}.jar
+%{_javadir}/xalan-serializer.jar
 %{_javadir}/xsltc-%{version}.jar
 %{_javadir}/xsltc.jar
+%{_javadir}/xalan-j2.jar
+%{_javadir}/xalan-j2-serializer.jar
 
 %if %{with doc}
 %files javadoc
