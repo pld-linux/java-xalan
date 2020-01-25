@@ -5,7 +5,6 @@
 
 %define		ver	%(echo %{version} | tr . _)
 %define		srcname	xalan
-%include	/usr/lib/rpm/macros.java
 Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
