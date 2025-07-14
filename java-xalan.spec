@@ -68,7 +68,7 @@ Przykłady dla xalan-j, procesora XSLT napisanego w Javie.
 %prep
 %setup -q -n xalan-j_%{ver}
 %{__sed} -i -e 's,\r$,,' build.xml
-%patch0 -p1
+%patch -P0 -p1
 
 find -name '*.jar' ! -name 'xalan2jdoc.jar' ! -name 'stylebook-1.0-b3_xalan-2.jar' | xargs rm -f
 
