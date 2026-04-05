@@ -3,13 +3,15 @@
 %bcond_without	doc	# do not build documentation
 %bcond_without	servlet	# don't build servlet sample
 
+%{?use_default_jdk:%use_default_jdk 8}
+
 %define		ver	%(echo %{version} | tr . _)
 %define		srcname	xalan
 Summary:	XSLT processor for Java
 Summary(pl.UTF-8):	Procesor XSLT napisany w Javie
 Name:		java-xalan
 Version:	2.7.1
-Release:	6
+Release:	7
 License:	Apache v2.0
 Group:		Applications/Publishing/XML/Java
 Source0:	http://www.apache.org/dist/xml/xalan-j/source/xalan-j_%{ver}-src.tar.gz
@@ -22,10 +24,10 @@ BuildRequires:	java(jaxp_parser_impl)
 BuildRequires:	java-bcel
 BuildRequires:	java-cup
 BuildRequires:	java-xml-commons-external
-BuildRequires:	jdk
+%buildrequires_jdk
 BuildRequires:	jlex
 BuildRequires:	jpackage-utils
-BuildRequires:	rpmbuild(macros) >= 1.300
+BuildRequires:	rpmbuild(macros) >= 1.556
 Requires:	java(jaxp_parser_impl)
 Provides:	java(jaxp_transform_impl)
 Provides:	xalan-j
